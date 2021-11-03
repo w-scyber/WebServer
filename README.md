@@ -1,68 +1,72 @@
 
-
 WebServer
 ===============
-Linux下C++轻量级Web服务器，助力初学者快速实践网络编程，搭建属于自己的服务器.
+
+这是一个轻量级的Web服务器，目前支持GET、HEAD方法处理静态资源。
 
 * 使用 **线程池 + 非阻塞socket + epoll(ET和LT均实现) + 事件处理(Reactor和模拟Proactor均实现)** 的并发模型
 * 使用**状态机**解析HTTP请求报文，支持解析**GET和POST**请求
+* 添加定时器支持HTTP长连接，定时回调handler处理超时连接
 * 访问服务器数据库实现web端用户**注册、登录**功能，可以请求服务器**图片和视频文件**
 
 测试页面: [http://120.78.85.58:43211/](http://120.78.85.58/)
 
 ------------
+
 * 服务器测试环境
-	* CentOS版本7
-	* MySQL版本5.7.29
+
+  * CentOS版本7
+  * MySQL版本5.7.29
+
 * 浏览器测试环境
-	* Windows、Linux均可
-	* Chrome
-	* FireFox
-	* 其他浏览器暂无测试
+
+  * Windows、Linux均可
+  * Chrome
+  * 其他浏览器暂无测试
 
 * 测试前确认已安装MySQL数据库
 
-    ```C++
-    // 建立yourdb库
-    create database yourdb;
-
-    // 创建user表
-    USE yourdb;
-    CREATE TABLE user(
-        username char(50) NULL,
-        passwd char(50) NULL
-    )ENGINE=InnoDB;
-
-    // 添加数据
-    INSERT INTO user(username, passwd) VALUES('name', 'passwd');
-    ```
+  ```C++
+  // 建立yourdb库
+  create database yourdb;
+  
+  // 创建user表
+  USE yourdb;
+  CREATE TABLE user(
+      username char(50) NULL,
+      passwd char(50) NULL
+  )ENGINE=InnoDB;
+  
+  // 添加数据
+  INSERT INTO user(username, passwd) VALUES('name', 'passwd');
+  ```
 
 * 修改main.cpp中的数据库初始化信息
 
-    ```C++
-    //数据库登录名,密码,库名
-    string user = "root";
-    string passwd = "root";
-    string databasename = "yourdb";
-    ```
+  ```C++
+  //数据库登录名,密码,库名
+  string user = "root";
+  string passwd = "root";
+  string databasename = "yourdb";
+  ```
 
 * 编译
 
-    ```C++
-    make
-    ```
+  ```C++
+  make
+  ```
 
 * 启动server
 
-    ```C++
-    ./server
-    ```
+  ```C++
+  ./server
+  ```
 
 * 浏览器端
 
-    ```C++
-    ip:43211
-    ```
+  ```C++
+  ip:43211
+  ```
 
 个性化运行
 ------
@@ -74,19 +78,19 @@ Linux下C++轻量级Web服务器，助力初学者快速实践网络编程，搭
 温馨提示:以上参数不是非必须，不用全部使用，根据个人情况搭配选用即可.
 
 * -p，自定义端口号
-	* 默认43211
+  * 默认43211
 * -m，listenfd和connfd的模式组合，默认使用LT + LT
-	* 0，表示使用LT + LT
-	* 1，表示使用LT + ET
+  * 0，表示使用LT + LT
+  * 1，表示使用LT + ET
     * 2，表示使用ET + LT
     * 3，表示使用ET + ET
 * -s，数据库连接数量
-	* 默认为8
+  * 默认为8
 * -t，线程数量
-	* 默认为8
+  * 默认为8
 * -a，选择反应堆模型，默认Proactor
-	* 0，Proactor模型
-	* 1，Reactor模型
+  * 0，Proactor模型
+  * 1，Reactor模型
 
 测试示例命令与含义
 
@@ -100,3 +104,30 @@ Linux下C++轻量级Web服务器，助力初学者快速实践网络编程，搭
 - [x] 线程池内有10条线程
 - [x] Reactor反应堆模型
 
+## 页面预览
+
+主页界面
+
+![image-20211103142621717](C:\Users\wws\Desktop\图片\image-20211103142621717.png)
+
+访问界面
+
+![image-20211103142804523](C:\Users\wws\Desktop\图片\image-20211103142804523.png)请求图片
+
+![image-20211103142836335](C:\Users\wws\Desktop\图片\image-20211103142836335.png)
+
+## 压力测试
+
+采用webbench对服务器进行压力测试，服务器采用ET + ET模式，并采用Reactor反应堆模型
+
+测试所用的服务器为1核2G阿里云服务器，性能较差会对QPS以及成功请求数做出限制，但仍可以承受住上万请求的并发，并不会出现访问失败的请求
+
+![image-20211103143619611](C:\Users\wws\Desktop\图片\image-20211103143619611.png)
+
+![image-20211103143639593](C:\Users\wws\Desktop\图片\image-20211103143639593.png)
+
+## 开发计划
+
++ 添加异步日志系统，记录服务器运行状态
++ 类似nginx的反向代理和负载均衡
++ 采用智能指针实现内存分配
