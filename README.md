@@ -108,13 +108,13 @@ WebServer
 
 主页界面
 
-![image-20211103142621717](C:\Users\wws\Desktop\图片\image-20211103142621717.png)
+![image-20211103142621717](https://github.com/w-scyber/WebServer/blob/main/root/md_picture/main.png)
 
 访问界面
 
-![image-20211103142804523](C:\Users\wws\Desktop\图片\image-20211103142804523.png)请求图片
+![image-20211103142804523](https://github.com/w-scyber/WebServer/blob/main/root/md_picture/choice.png)请求图片
 
-![image-20211103142836335](C:\Users\wws\Desktop\图片\image-20211103142836335.png)
+![image-20211103142836335](https://github.com/w-scyber/WebServer/blob/main/root/md_picture/p.png)
 
 ## 压力测试
 
@@ -122,9 +122,9 @@ WebServer
 
 测试所用的服务器为1核2G阿里云服务器，性能较差会对QPS以及成功请求数做出限制，但仍可以承受住上万请求的并发，并不会出现访问失败的请求
 
-![image-20211103143619611](C:\Users\wws\Desktop\图片\image-20211103143619611.png)
+![image-20211103143619611](https://github.com/w-scyber/WebServer/blob/main/root/md_picture/web1.png)
 
-![image-20211103143639593](C:\Users\wws\Desktop\图片\image-20211103143639593.png)
+![image-20211103143639593](https://github.com/w-scyber/WebServer/blob/main/root/md_picture/web2.png)
 
 ## 开发计划
 
